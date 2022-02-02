@@ -1,10 +1,14 @@
 const {User} = require('../models');
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
+const crypto =  require('crypto');
 
 function jwtSignuser(user) {
     const ONE_WEEK = 60*60*24*7;
-    return jwt.sign({user: user.id}, config.authentication.jwtSecret, {
+    return jwt.sign({
+        user: user.id,
+        hash: crypto.createHash("sha256").update(user.password).digest('hex')
+    }, config.authentication.jwtSecret, {
         expiresIn: ONE_WEEK
     })
 }

@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const {User} = require('../models')
 const config = require("../config/config");
+const crypto =  require('crypto');
 
 const verifyToken = async (req, res, next) => {
     const token =
@@ -21,7 +22,11 @@ const verifyToken = async (req, res, next) => {
         });
 
         if (!user) {
-          throw new Error("User not found");
+          throw new Error("Invalid user in jwt token!");
+        }
+
+        if (crypto.createHash("sha256").update(user.password).digest('hex') !== tokenContent.hash) {
+            throw new Error("Invalid hash in jwt token!");
         }
 
         req.user = user;
