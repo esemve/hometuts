@@ -28,7 +28,7 @@ module.exports = {
         try {
             const user = await User.create(req.body);
 
-            res.send(res.send(createResponseObject(user)))
+            res.send(createResponseObject(user))
 
         } catch (err) {
             res.status(400).send({

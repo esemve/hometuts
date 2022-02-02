@@ -1,4 +1,5 @@
-const AuthenticationController = require('./controllers/AuthController')
+const AuthenticationController = require('./controllers/AuthController');
+const LessionController = require('./controllers/LessionController');
 
 const Registration = require('./middleware/Registration');
 const Auth = require("./middleware/Auth");
@@ -23,8 +24,12 @@ module.exports = (app) => {
         AuthenticationController.login
     );
 
+    app.get('/lessions',
+        Auth,
+        LessionController.index
+    );
+
     app.get('/checklogin', Auth, (req, res) => {
-        console.log(req.user);
         res.send({
             message: 'ok'
         })
