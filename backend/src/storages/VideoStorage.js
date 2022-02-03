@@ -16,6 +16,21 @@ module.exports = {
         return output;
     },
 
+    getTutorials(tag) {
+
+        if (typeof videoListStorage[tag] === 'undefined') {
+            return null;
+        }
+
+        const output = [];
+
+        for (let key in videoListStorage[tag]) {
+            output.push(key);
+        }
+
+        return output;
+    },
+
     add(tag, tutorial, lesson, video) {
         if (typeof videoListStorage[tag] === 'undefined') {
             videoListStorage[tag] = [];

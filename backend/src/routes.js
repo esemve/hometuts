@@ -1,5 +1,6 @@
 const AuthenticationController = require('./controllers/AuthController');
-const LessionController = require('./controllers/LessionController');
+const TagsController = require('./controllers/TagsController');
+const TutorialsController = require('./controllers/TutorialsController');
 
 const Registration = require('./middleware/Registration');
 const Auth = require("./middleware/Auth");
@@ -24,9 +25,14 @@ module.exports = (app) => {
         AuthenticationController.login
     );
 
-    app.get('/lessions',
+    app.get('/tags',
         Auth,
-        LessionController.index
+        TagsController.index
+    );
+
+    app.get('/tags/:tag',
+        Auth,
+        TutorialsController.index
     );
 
     app.get('/checklogin', Auth, (req, res) => {
