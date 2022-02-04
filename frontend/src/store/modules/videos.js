@@ -11,14 +11,8 @@ export default {
     }
   },
   actions: {
-    async loadTagsFromApi ({ commit, rootState }) {
-      await HttpService('http://localhost:3000/tags', {
-        method: 'GET',
-        headers: {
-          'x-access-token': rootState.user.token,
-          'Content-Type': 'application/json'
-        }
-      }).then((response) => {
+    loadTagsFromApi ({ commit }) {
+      HttpService().get('tags').then((response) => {
         commit('setTags', response.data.tags)
       })
     }

@@ -23,12 +23,9 @@ export default {
     initializeUserStore ({commit}) {
     },
     async login ({ commit }, data) {
-      await HttpService('http://localhost:3000/login', {
-        method: 'POST',
-        data: {
-          username: data.username,
-          password: data.password
-        }
+      await HttpService(null, false).post('login', {
+        username: data.username,
+        password: data.password
       }).then((response) => {
         let token = response.data.token
         commit('setInvalidLoginAttempt', false)
