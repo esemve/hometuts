@@ -3,20 +3,23 @@ import HttpService from '../../services/HttpService'
 export default {
   namespaced: true,
   state: {
-    kecske: 'sajt',
-    serviceStatus: 'OFF'
+    tags: []
   },
   mutations: {
-    setServiceStatus (state, value) {
-      state.serviceStatus = value
+    setTags (state, value) {
+      state.tags = value
     }
   },
   actions: {
-    async checkHealth ({ commit }) {
-      await HttpService('http://localhost:3000/healthcheck', {
-        method: 'GET'
+    async loadTagsFromApi ({ commit, rootState }) {
+      await HttpService('http://localhost:3000/tags', {
+        method: 'GET',
+        headers: {
+          'x-access-token': rootState.user.token,
+          'Content-Type': 'application/json'
+        }
       }).then((response) => {
-        commit('setServiceStatus', response.data.message)
+        commit('setTags', response.data.tags)
       })
     }
   }

@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import Buefy from 'buefy'
+import { mapActions } from 'vuex'
 import 'buefy/dist/buefy.css'
 
 Vue.config.productionTip = false
@@ -12,10 +13,17 @@ Vue.config.productionTip = false
 Vue.use(Buefy)
 
 /* eslint-disable no-new */
+
 new Vue({
   el: '#app',
   router,
   store,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  methods: {
+    ...mapActions('user', ['initializeUserStore'])
+  },
+  created () {
+    this.initializeUserStore()
+  }
 })
