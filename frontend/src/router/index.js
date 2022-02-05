@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
-import Tuts from '@/components/Tuts'
+import Tags from '@/components/Tags'
+import Tutorials from '@/components/Tutorials'
 import store from '@/store/index'
 
 Vue.use(Router)
@@ -14,9 +15,14 @@ const router = new Router({
       component: Login
     },
     {
-      path: '/tuts',
-      name: 'tuts',
-      component: Tuts
+      path: '/tags',
+      name: 'tags',
+      component: Tags
+    },
+    {
+      path: '/tutorials/:tag',
+      name: 'tutorials',
+      component: Tutorials
     },
     {
       path: '*',
@@ -28,7 +34,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.fullPath === '/login') {
     if (store.getters['user/isLoggedIn']) {
-      next('/tuts')
+      next('/tags')
     }
   } else {
     if (!store.getters['user/isLoggedIn']) {

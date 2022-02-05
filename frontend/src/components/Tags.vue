@@ -9,7 +9,8 @@
             <ul>
                 <li v-for="item in tags" :key="item">
                     <div class="buttons">
-                        <b-button type="is-primary" class="mb-3 mt-3 is-light" expanded>{{ item }}</b-button>
+                        <b-button type="is-primary" class="mb-3 mt-3 is-light" expanded
+                        @click="goToTutorialsPage(item)">{{ item }}</b-button>
                     </div>
                 </li>
             </ul>
@@ -20,14 +21,18 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import router from '../router'
 
 export default {
-  name: 'Tuts',
+  name: 'Tags',
   computed: {
     ...mapState('videos', ['tags'])
   },
   methods: {
-    ...mapActions('videos', ['loadTagsFromApi'])
+    ...mapActions('videos', ['loadTagsFromApi']),
+    goToTutorialsPage: (tag) => {
+      router.push({ name: 'tutorials', params: { tag: tag } })
+    }
   },
   mounted () {
     this.$store.dispatch('videos/loadTagsFromApi', { self: this })

@@ -31,7 +31,7 @@ export default {
         commit('setInvalidLoginAttempt', false)
         commit('setToken', token)
         localStorage.setItem('jwt', token)
-        router.push({name: 'tuts'})
+        router.push({name: 'tags'})
       }).catch((response) => {
         commit('setInvalidLoginAttempt', true)
       })
