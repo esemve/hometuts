@@ -28,10 +28,22 @@ module.exports = {
         const parts = file.split('/');
 
         if (parts.length === 3) {
-            VideoStorage.add(parts[0], parts[1], '/default/', parts[2])
+            if (this.checkIsValidVideoFile(parts[2])) {
+                VideoStorage.add(parts[0], parts[1], '/default/', parts[2])
+            }
         } else if (parts.length === 4) {
-            VideoStorage.add(parts[0], parts[1], parts[2], parts[3])
+            if (this.checkIsValidVideoFile(parts[3])) {
+                VideoStorage.add(parts[0], parts[1], parts[2], parts[3])
+            }
         }
+    },
+
+    checkIsValidVideoFile(fileName) {
+        if (fileName.charAt(0) === '.') {
+            return false;
+        }
+
+        return true;
 
     },
 

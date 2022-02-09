@@ -5,7 +5,10 @@ export default {
   state: {
     tags: [],
     tutorials: [],
-    currentTag: null
+    videos: [],
+    currentTag: null,
+    currentTutorial: null,
+    isVideoPlay: false
   },
   mutations: {
     setTags (state, value) {
@@ -16,6 +19,15 @@ export default {
     },
     setCurrentTag (state, value) {
       state.currentTag = value
+    },
+    setCurrentTutorial (state, value) {
+      state.currentTutorial = value
+    },
+    setVideos (state, value) {
+      state.videos = value
+    },
+    setIsVideoPlay (state, value) {
+      state.isVideoPlay = value
     }
   },
   actions: {
@@ -28,6 +40,12 @@ export default {
       commit('setTutorials', [])
       HttpService().get('tags/' + state.currentTag).then((response) => {
         commit('setTutorials', response.data.tutorials)
+      })
+    },
+    loadVideosFromApi ({ commit, state }) {
+      commit('setVideos', [])
+      HttpService().get('videos/' + state.currentTag + '/' + state.currentTutorial).then((response) => {
+        commit('setVideos', response.data.videos)
       })
     }
   }

@@ -1,4 +1,4 @@
-let videoListStorage = [];
+let videoListStorage = {};
 
 module.exports = {
 
@@ -31,12 +31,25 @@ module.exports = {
         return output;
     },
 
+    getVideos(tag, tutorial) {
+
+        if (typeof videoListStorage[tag] === 'undefined') {
+            return null;
+        }
+
+        if (typeof videoListStorage[tag][tutorial] === 'undefined') {
+            return null;
+        }
+
+        return videoListStorage[tag][tutorial];
+    },
+
     add(tag, tutorial, lesson, video) {
         if (typeof videoListStorage[tag] === 'undefined') {
-            videoListStorage[tag] = [];
+            videoListStorage[tag] = {};
         }
         if (typeof videoListStorage[tag][tutorial] === 'undefined') {
-            videoListStorage[tag][tutorial] = [];
+            videoListStorage[tag][tutorial] = {};
         }
         if (typeof videoListStorage[tag][tutorial][lesson] === 'undefined') {
             videoListStorage[tag][tutorial][lesson] = [];

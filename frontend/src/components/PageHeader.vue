@@ -1,5 +1,5 @@
 <template>
-    <b-navbar>
+    <b-navbar v-show="!isVideoPlay">
         <template #brand>
             <b-navbar-item tag="router-link" :to="{ path: '/' }">
                 <img
@@ -21,12 +21,13 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
   name: 'PageHeader',
   computed: {
-    ...mapGetters('user', ['isLoggedIn'])
+    ...mapGetters('user', ['isLoggedIn']),
+    ...mapState('videos', ['isVideoPlay'])
   },
   methods: {
     ...mapActions('user', ['logout'])

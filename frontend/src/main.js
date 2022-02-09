@@ -5,12 +5,15 @@ import App from './App'
 import router from './router'
 import store from './store'
 import Buefy from 'buefy'
+import VueVideoPlayer from 'vue-video-player'
 import { mapActions } from 'vuex'
 import 'buefy/dist/buefy.css'
+import 'video.js/dist/video-js.css'
 
 Vue.config.productionTip = false
 
 Vue.use(Buefy)
+Vue.use(VueVideoPlayer)
 
 /* eslint-disable no-new */
 

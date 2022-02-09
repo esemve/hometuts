@@ -9,7 +9,8 @@
             <ul>
                 <li v-for="item in tutorials" :key="item">
                     <div class="buttons">
-                        <b-button type="is-primary" class="mb-3 mt-3 is-light" expanded>{{ item }}</b-button>
+                        <b-button type="is-primary" class="mb-3 mt-3 is-light" expanded
+                        @click="goToVideosPage(currentTag, item)">{{ item }}</b-button>
                     </div>
                 </li>
             </ul>
@@ -20,6 +21,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
+import router from '../router'
 
 export default {
   name: 'Tutorials',
@@ -28,10 +30,12 @@ export default {
   },
   methods: {
     ...mapMutations('videos', ['setCurrentTag']),
-    ...mapActions('videos', ['loadTutorialsFromApi'])
+    ...mapActions('videos', ['loadTutorialsFromApi']),
+    goToVideosPage: (tag, tutorial) => {
+      router.push({ name: 'videos', params: { tag: tag, tutorial: tutorial } })
+    }
   },
   mounted () {
-    console.log(this.$route.params.tag)
     this.setCurrentTag(this.$route.params.tag)
     this.loadTutorialsFromApi()
   }
