@@ -3,17 +3,19 @@
         <div v-show="!isVideoPlay" class="login columns is-centered mt-2">
             <nav class="panel column is-two-fifths-desktop is-four-fifths-mobile ml-auto mr-auto">
                 <p class="panel-heading mb-2">
-                    Videos in {{ currentTag }} / {{ currentTutorial }}
+                    <a @click="$router.push({ name: 'tags' })">Home</a> /
+                    <a @click="$router.push({ name: 'tutorials', tag: currentTag })">{{ currentTag | asReadable }}</a> /
+                    {{ currentTutorial | asReadable }}
                 </p>
 
                 <div  v-for="(block, blockname) in videos" :key="blockname">
-                <h4 class="title is-4 mb-0" v-show="blockname !== '/default/'">{{ blockname }}</h4>
+                <h4 class="title is-4 mb-0" v-show="blockname !== '/default/'">{{ blockname | asReadable }}</h4>
 
                 <ul class="mb-5">
                     <li v-for="item in block" :key="item">
                         <div class="buttons">
                             <b-button type="is-primary" class="mb-3 mt-3 is-light" expanded
-                            @click="startVideo(currentTag, currentTutorial, blockname, item)">{{ item }}</b-button>
+                            @click="startVideo(currentTag, currentTutorial, blockname, item)">{{ item | asReadable }}</b-button>
                         </div>
                     </li>
                 </ul>
@@ -30,7 +32,7 @@
             </video-player>
 
             <div id="bottomNav">
-            <h4 id="videoTitle" class="title is-4 mb-0 pb-0">{{ currentVideo }}</h4>
+            <h4 id="videoTitle" class="title is-4 mb-0 pb-0">{{ currentVideo | asReadable }} ({{ currentIndex + 1 }} / {{ videosFlatList.length }})</h4>
 
                 <button class="button is-dark" :disabled="previousVideo === null" @click="startVideo(currentTag, currentTutorial, previousVideo.block, previousVideo.video)">
                     &lt;
@@ -73,8 +75,8 @@ export default {
         playbackRates: [0.7, 1.0, 1.5, 2.0],
         sources: []
       },
-      currentTime: 0,
       currentVideo: null,
+      currentIndex: 0,
       previousVideo: null,
       nextVideo: null,
       videosFlatList: []
@@ -93,28 +95,28 @@ export default {
         src: url
       }]
       this.currentVideo = video
-      const currentVideoIndex = this.videosFlatList.indexOf(`${block}#${video}`)
+      this.currentIndex = this.videosFlatList.indexOf(`${block}#${video}`)
       this.setIsVideoPlay(true)
 
-      this.setPreviousVideo(currentVideoIndex)
-      this.setNextVideo(currentVideoIndex)
+      this.setPreviousVideo()
+      this.setNextVideo()
     },
-    setPreviousVideo (currentVideoIndex) {
-      if (currentVideoIndex <= 0) {
+    setPreviousVideo () {
+      if (this.currentIndex <= 0) {
         this.previousVideo = null
       } else {
-        const previousVideoPathParts = this.videosFlatList[currentVideoIndex - 1].split('#')
+        const previousVideoPathParts = this.videosFlatList[this.currentIndex - 1].split('#')
         this.previousVideo = {
           block: previousVideoPathParts[0],
           video: previousVideoPathParts[1]
         }
       }
     },
-    setNextVideo (currentVideoIndex) {
-      if (currentVideoIndex >= this.videosFlatList.length - 1) {
+    setNextVideo () {
+      if (this.currentIndex >= this.videosFlatList.length - 1) {
         this.nextVideo = null
       } else {
-        const nextVideoPathParts = this.videosFlatList[currentVideoIndex + 1].split('#')
+        const nextVideoPathParts = this.videosFlatList[this.currentIndex + 1].split('#')
         this.nextVideo = {
           block: nextVideoPathParts[0],
           video: nextVideoPathParts[1]

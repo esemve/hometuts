@@ -17,6 +17,22 @@ Vue.use(VueVideoPlayer)
 
 /* eslint-disable no-new */
 
+Vue.filter('asReadable', function (value) {
+  if (!value) return ''
+  let originalValue = value
+  value = value.toString()
+  value = value.replace('.mp4', '')
+  value = value.replace('.mkv', '')
+  value = value.replace(/^[0-9]+/g, '')
+  value = value.replace('-', ' ')
+  value = value.replace('_', ' ')
+  value = value.charAt(0).toUpperCase() + value.slice(1)
+  if (value.trim() === '') {
+    return originalValue
+  }
+  return value
+})
+
 new Vue({
   el: '#app',
   router,
