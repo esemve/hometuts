@@ -2,7 +2,7 @@ const VideoStorage = require('../storages/VideoStorage');
 
 const fs = require('fs');
 const path = require('path');
-
+const process = require('process')
 
 module.exports = {
 
@@ -70,7 +70,7 @@ module.exports = {
     },
 
     getVideoFolderPath(withEndingSlash = false) {
-        return './../videos' + (withEndingSlash ? '/' : '');
+        return process.env.VIDEO_FOLDER_ABSOLUTE_PATH + (withEndingSlash ? '/' : '');
     },
 
     getSupportedExtensions() {

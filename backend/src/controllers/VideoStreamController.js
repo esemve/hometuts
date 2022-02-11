@@ -1,6 +1,7 @@
 const querystring = require('querystring');
 const VideoStorage = require('../storages/VideoStorage');
 const fs = require("fs");
+const process = require("process");
 var mime = require('mime');
 
 
@@ -15,7 +16,7 @@ module.exports = {
         res.status(400).send("Invalid request!");
         return
       }
-      let videoPath = `./../videos/${qs.tag}/${qs.tutorial}/`
+      let videoPath = `${process.env.VIDEO_FOLDER_ABSOLUTE_PATH}/${qs.tag}/${qs.tutorial}/`
       if (typeof qs.group !== 'undefined') {
         videoPath = videoPath + qs.group + "/"
       }
@@ -42,7 +43,6 @@ module.exports = {
       videoStream.pipe(res);
 
     } catch (err) {
-      console.log(err)
       res.status(500).send({
         error: 'Error!'
       })

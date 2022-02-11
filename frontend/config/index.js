@@ -3,6 +3,9 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const process = require('process')
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+
 
 module.exports = {
   dev: {
@@ -13,8 +16,8 @@ module.exports = {
     proxyTable: {},
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    host: process.env.FRONTEND_HOST, // can be overwritten by process.env.HOST
+    port:  process.env.FRONTEND_PORT, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
