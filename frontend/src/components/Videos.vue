@@ -32,13 +32,16 @@
             </video-player>
 
             <div id="bottomNav">
-            <h4 id="videoTitle" class="title is-4 mb-0 pb-0">{{ currentVideo | asReadable }} ({{ currentIndex + 1 }} / {{ videosFlatList.length }})</h4>
+            <h4 id="videoTitle" class="title is-4 mb-0 pb-0">
+                ({{ currentIndex + 1 }} / {{ videosFlatList.length }})
+                {{ currentVideo | asReadable }}
+            </h4>
 
-                <button class="button is-dark" :disabled="previousVideo === null" @click="startVideo(currentTag, currentTutorial, previousVideo.block, previousVideo.video)">
+                <button id="previousVideoButton" class="button is-dark" :disabled="previousVideo === null" @click="startVideo(currentTag, currentTutorial, previousVideo.block, previousVideo.video)">
                     &lt;
                 </button>
 
-                <button class="button is-dark" :disabled="nextVideo === null" @click="startVideo(currentTag, currentTutorial, nextVideo.block, nextVideo.video)">
+                <button id="nextVideoButton" class="button is-dark" :disabled="nextVideo === null" @click="startVideo(currentTag, currentTutorial, nextVideo.block, nextVideo.video)">
                     &gt;
                 </button>
 
@@ -179,5 +182,15 @@ export default {
         height:64px;
         bottom:0;
         background-color: #000;
+    }
+    #previousVideoButton {
+        position: absolute;
+        right: 150px;
+        bottom: 10px;
+    }
+    #nextVideoButton {
+        position: absolute;
+        right: 100px;
+        bottom: 10px;
     }
 </style>
