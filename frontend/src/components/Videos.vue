@@ -89,7 +89,7 @@ export default {
     ...mapMutations('videos', ['setCurrentTag', 'setCurrentTutorial', 'setIsVideoPlay']),
     ...mapActions('videos', ['loadVideosFromApi']),
     startVideo (tag, tutorial, block, video) {
-      let url = `http://localhost:3000/videostream?dl&tag=${tag}&tutorial=${tutorial}&video=${video}`
+      let url = `${process.env.VUE_APP_BACKEND_SCHEME}://${process.env.VUE_APP_BACKEND_HOST}:${process.env.VUE_APP_BACKEND_PORT}/videostream?dl&tag=${tag}&tutorial=${tutorial}&video=${video}`
       if (block !== '/default/') {
         url = `${url}&group=${block}`
       }

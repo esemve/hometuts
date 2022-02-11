@@ -14,7 +14,7 @@ export default (headers = null, withToken = true) => {
 
   return axios.create({
     timeout: 100000,
-    baseURL: `http://${process.env.VUE_APP_BACKEND_HOST}:${process.env.VUE_APP_BACKEND_PORT}`,
+    baseURL: `${process.env.VUE_APP_BACKEND_SCHEME}://${process.env.VUE_APP_BACKEND_HOST}:${process.env.VUE_APP_BACKEND_PORT}`,
     headers: headers
   })
 }
