@@ -31,9 +31,18 @@
 
             <div id="bottomNav">
             <h4 id="videoTitle" class="title is-4 mb-0 pb-0">{{ currentVideo }}</h4>
-            <a id="videoCloseButton" class="button is-dark" @click="closeVideo()">
-                Close
-            </a>
+
+                <button class="button is-dark" :disabled="previousVideo === null" @click="startVideo(currentTag, currentTutorial, previousVideo.block, previousVideo.video)">
+                    &lt;
+                </button>
+
+                <button class="button is-dark" :disabled="nextVideo === null" @click="startVideo(currentTag, currentTutorial, nextVideo.block, nextVideo.video)">
+                    &gt;
+                </button>
+
+                <button id="videoCloseButton" class="button is-dark" @click="closeVideo()">
+                    Close
+                </button>
             </div>
         </div>
     </div>
@@ -65,7 +74,10 @@ export default {
         sources: []
       },
       currentTime: 0,
-      currentVideo: null
+      currentVideo: null,
+      previousVideo: null,
+      nextVideo: null,
+      videosFlatList: []
     }
   },
   methods: {
@@ -81,7 +93,33 @@ export default {
         src: url
       }]
       this.currentVideo = video
+      const currentVideoIndex = this.videosFlatList.indexOf(`${block}#${video}`)
       this.setIsVideoPlay(true)
+
+      this.setPreviousVideo(currentVideoIndex)
+      this.setNextVideo(currentVideoIndex)
+    },
+    setPreviousVideo (currentVideoIndex) {
+      if (currentVideoIndex <= 0) {
+        this.previousVideo = null
+      } else {
+        const previousVideoPathParts = this.videosFlatList[currentVideoIndex - 1].split('#')
+        this.previousVideo = {
+          block: previousVideoPathParts[0],
+          video: previousVideoPathParts[1]
+        }
+      }
+    },
+    setNextVideo (currentVideoIndex) {
+      if (currentVideoIndex >= this.videosFlatList.length - 1) {
+        this.nextVideo = null
+      } else {
+        const nextVideoPathParts = this.videosFlatList[currentVideoIndex + 1].split('#')
+        this.nextVideo = {
+          block: nextVideoPathParts[0],
+          video: nextVideoPathParts[1]
+        }
+      }
     },
     closeVideo () {
       this.setIsVideoPlay(false)
@@ -91,6 +129,15 @@ export default {
     this.setCurrentTag(this.$route.params.tag)
     this.setCurrentTutorial(this.$route.params.tutorial)
     this.loadVideosFromApi()
+  },
+  watch: {
+    videos (newValue) {
+      for (const [key, value] of Object.entries(newValue)) {
+        for (const file of value) {
+          this.videosFlatList.push(`${key}#${file}`)
+        }
+      }
+    }
   }
 }
 </script>
