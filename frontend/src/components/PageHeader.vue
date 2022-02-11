@@ -8,13 +8,25 @@
             </b-navbar-item>
         </template>
         <template #end>
-            <b-navbar-item tag="div" v-if="isLoggedIn">
-                <div class="buttons">
-                    <a class="button is-light" @click="logout">
-                        Log out
-                    </a>
-                </div>
-            </b-navbar-item>
+            <b-navbar-dropdown label="Menu" v-if="isLoggedIn">
+                <b-navbar-item @click="$router.push({ name: 'tags' })">
+                    Home
+                </b-navbar-item>
+                <b-navbar-item @click="$router.push({ name: 'profile' })">
+                    Password
+                </b-navbar-item>
+                <hr class="navbar-divider">
+                <b-navbar-item href="#">
+                    Users
+                </b-navbar-item>
+                <b-navbar-item href="#">
+                    Server
+                </b-navbar-item>
+                <hr class="navbar-divider">
+                <b-navbar-item @click="logout">
+                    Log out
+                </b-navbar-item>
+            </b-navbar-dropdown>
         </template>
     </b-navbar>
 

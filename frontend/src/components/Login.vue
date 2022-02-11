@@ -6,14 +6,12 @@
         Login
       </p>
 
-      {{ token }}
-
       <b-field label="Username">
         <b-input maxlength="30" v-model="username"></b-input>
       </b-field>
 
       <b-field label="Password">
-        <b-input type="password" maxlength="30" v-model="password"></b-input>
+        <b-input type="password" v-model="password"></b-input>
       </b-field>
 
       <b-message type="is-danger" v-show="invalidLoginAttempt">

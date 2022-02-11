@@ -4,6 +4,7 @@ import Login from '@/components/Login'
 import Tags from '@/components/Tags'
 import Tutorials from '@/components/Tutorials'
 import Videos from '@/components/Videos'
+import Profile from '@/components/Profile'
 import store from '@/store/index'
 
 Vue.use(Router)
@@ -14,6 +15,11 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile
     },
     {
       path: '/videos/:tag/:tutorial',

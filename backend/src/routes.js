@@ -4,7 +4,6 @@ const TutorialsController = require('./controllers/TutorialsController');
 const VideosController = require('./controllers/VideosController');
 const VideoStreamController = require('./controllers/VideoStreamController');
 
-const Registration = require('./middleware/Registration');
 const Auth = require("./middleware/Auth");
 
 
@@ -17,9 +16,9 @@ module.exports = (app) => {
     });
 
     app.post(
-        '/register',
-        Registration,
-        AuthenticationController.register
+        '/password-change',
+        Auth,
+        AuthenticationController.passwordChange
     );
 
     app.post(

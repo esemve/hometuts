@@ -24,15 +24,29 @@ function createResponseObject (user) {
 
 
 module.exports = {
-    async register (req, res) {
+    async passwordChange (req, res) {
         try {
-            const user = await User.create(req.body);
+            const user = req.user
+            const {password} = req.body;
 
-            res.send(createResponseObject(user))
+            if (password === '') {
+                throw new Error();
+            }
+
+            user.password = password
+            user.save()
+
+            const reloadedUser = await User.findOne({
+                where: {
+                    id: user.id
+                }
+            });
+
+            res.send(createResponseObject(reloadedUser))
 
         } catch (err) {
             res.status(400).send({
-                error: 'This username is taken!'
+                error: 'Invalid password changing!'
             })
         }
     },
