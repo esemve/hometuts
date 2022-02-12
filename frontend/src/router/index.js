@@ -5,6 +5,8 @@ import Tags from '@/components/Tags'
 import Tutorials from '@/components/Tutorials'
 import Videos from '@/components/Videos'
 import Profile from '@/components/Profile'
+import Users from '@/components/Users'
+import CreateUser from '@/components/CreateUser'
 import store from '@/store/index'
 
 Vue.use(Router)
@@ -35,6 +37,16 @@ const router = new Router({
       path: '/tags',
       name: 'tags',
       component: Tags
+    },
+    {
+      path: '/users/create',
+      name: 'createUser',
+      component: CreateUser
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: Users
     },
     {
       path: '*',

@@ -5,7 +5,8 @@ export default {
   namespaced: true,
   state: {
     invalidLoginAttempt: false,
-    token: localStorage.getItem('jwt')
+    token: localStorage.getItem('jwt'),
+    isAdmin: (localStorage.getItem('isAdmin') === 'true')
   },
   mutations: {
     setToken (state, value) {
@@ -13,6 +14,9 @@ export default {
     },
     setInvalidLoginAttempt (state, value) {
       state.invalidLoginAttempt = value
+    },
+    setIsAdmin (state, value) {
+      state.isAdmin = value
     }
   },
   getters: {
@@ -28,22 +32,27 @@ export default {
         password: data.password
       }).then((response) => {
         let token = response.data.token
+        let isAdmin = response.data.isAdmin
+        console.log(isAdmin)
         commit('setInvalidLoginAttempt', false)
         commit('setToken', token)
+        commit('setIsAdmin', isAdmin)
         localStorage.setItem('jwt', token)
+        localStorage.setItem('isAdmin', isAdmin)
         router.push({name: 'tags'})
       }).catch(() => {
         commit('setInvalidLoginAttempt', true)
       })
     },
     updateToken ({ commit }, data) {
-      console.log('COMMIT', data)
       commit('setToken', data)
       localStorage.setItem('jwt', data)
     },
     logout ({ commit }) {
       localStorage.removeItem('jwt')
+      localStorage.removeItem('isAdmin')
       commit('setToken', null)
+      commit('isAdmin', false)
       router.push({name: 'login'})
     }
   }

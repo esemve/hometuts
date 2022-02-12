@@ -18,6 +18,7 @@ function createResponseObject (user) {
     return {
         username: userJson.username,
         id: userJson.id,
+        isAdmin: user.isAdmin,
         token: jwtSignuser(userJson)
     }
 }

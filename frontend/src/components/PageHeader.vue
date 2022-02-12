@@ -15,11 +15,11 @@
                 <b-navbar-item @click="$router.push({ name: 'profile' })">
                     Password
                 </b-navbar-item>
-                <hr class="navbar-divider">
-                <b-navbar-item href="#">
+                <hr class="navbar-divider" v-if="isAdmin">
+                <b-navbar-item  @click="$router.push({ name: 'users' })" v-if="isAdmin">
                     Users
                 </b-navbar-item>
-                <b-navbar-item href="#">
+                <b-navbar-item href="#" v-if="isAdmin">
                     Server
                 </b-navbar-item>
                 <hr class="navbar-divider">
@@ -39,6 +39,7 @@ export default {
   name: 'PageHeader',
   computed: {
     ...mapGetters('user', ['isLoggedIn']),
+    ...mapState('user', ['isAdmin']),
     ...mapState('videos', ['isVideoPlay'])
   },
   methods: {
